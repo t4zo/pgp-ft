@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "531414720246",
+    "firebase_url": "https://pgp2020-70243.firebaseio.com",
+    "project_id": "pgp2020-70243",
+    "storage_bucket": "pgp2020-70243.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531414720246:android:215cb018521d4378f416d7",
+        "android_client_info": {
+          "package_name": "com.PGP2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "531414720246-10ot2rg9r3l2gklhgpk1v4etbmtl88vq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvut831Pw97YRjb-8pC80gzdi_cUOjyhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531414720246-10ot2rg9r3l2gklhgpk1v4etbmtl88vq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

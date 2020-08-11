@@ -1,0 +1,3 @@
+class EditarViewModel {
+  bool ocupado;
+}
