@@ -380,7 +380,10 @@ class _EditarViewState extends State<EditarView> {
       _ocupado = true;
     });
 
-    await _uploadImageAsync();
+    if(_image != null) {
+      await _uploadImageAsync();
+    }
+
     await Firestore.instance
         .collection(Constants.PREFEITO)
         .document(_prefeito.uid)
