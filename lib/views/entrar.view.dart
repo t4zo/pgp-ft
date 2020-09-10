@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:PGP2020/viewmodels/entrar.viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,92 +32,96 @@ class _EntrarViewState extends State<EntrarView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffold,
-      appBar: AppBar(
-        title: Text('Área Restrita'),
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top -
-                  56,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      scale: 4,
-                      semanticLabel: 'Logo',
+    final body = SafeArea(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top -
+                56,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    scale: 4,
+                    semanticLabel: 'Logo',
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.15),
+                  child: Form(
+                    key: _form,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        TextFormField(
+                          initialValue: _initialValues['email'],
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) => FocusScope.of(context)
+                              .requestFocus(_senhaFocusNode),
+                          decoration: const InputDecoration(labelText: 'Email'),
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'Por favor, informe seu email';
+                            return null;
+                          },
+                          onSaved: (value) => entrarViewModel.email = value,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          obscureText: true,
+                          textInputAction: TextInputAction.done,
+                          focusNode: _senhaFocusNode,
+                          decoration: const InputDecoration(labelText: 'Senha'),
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'Por favor, informe sua senha';
+                            return null;
+                          },
+                          onSaved: (value) => entrarViewModel.senha = value,
+                        ),
+                      ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width * 0.15),
-                    child: Form(
-                      key: _form,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          TextFormField(
-                            initialValue: _initialValues['email'],
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) => FocusScope.of(context)
-                                .requestFocus(_senhaFocusNode),
-                            decoration:
-                                const InputDecoration(labelText: 'Email'),
-                            validator: (value) {
-                              if (value.isEmpty)
-                                return 'Por favor, informe seu email';
-                              return null;
-                            },
-                            onSaved: (value) => entrarViewModel.email = value,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            obscureText: true,
-                            textInputAction: TextInputAction.done,
-                            focusNode: _senhaFocusNode,
-                            decoration:
-                                const InputDecoration(labelText: 'Senha'),
-                            validator: (value) {
-                              if (value.isEmpty)
-                                return 'Por favor, informe sua senha';
-                              return null;
-                            },
-                            onSaved: (value) => entrarViewModel.senha = value,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  RaisedButton(
-                    child: entrarViewModel.ocupado
-                        ? SizedBox(
-                            height: 15,
-                            child:
-                                const CircularProgressIndicator(strokeWidth: 3),
-                          )
-                        : Text('Entrar'),
-                    elevation: 2,
-                    color: Theme.of(context).primaryColor,
-                    textColor:
-                        Theme.of(context).primaryTextTheme.headline6.color,
-                    onPressed: _entrar,
-                  ),
-                ],
-              ),
+                ),
+                RaisedButton(
+                  child: entrarViewModel.ocupado
+                      ? SizedBox(
+                          height: 15,
+                          child:
+                              const CircularProgressIndicator(strokeWidth: 3),
+                        )
+                      : Text('Entrar'),
+                  elevation: 2,
+                  color: Theme.of(context).primaryColor,
+                  textColor: Theme.of(context).primaryTextTheme.headline6.color,
+                  onPressed: _entrar,
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: body,
+            navigationBar: CupertinoNavigationBar(
+              middle: Text('Área Restrita'),
+            ),
+          )
+        : Scaffold(
+            key: _scaffold,
+            appBar: AppBar(title: Text('Área Restrita')),
+            body: body,
+          );
   }
 
   Future _entrar() async {

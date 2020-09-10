@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:PGP2020/views/agenda.view.dart';
 import 'package:PGP2020/views/editar.view.dart';
@@ -15,6 +16,7 @@ import 'package:PGP2020/views/topicos/mobilidade.view.dart';
 import 'package:PGP2020/views/topicos/saude.view.dart';
 import 'package:PGP2020/views/topicos/social.view.dart';
 import 'package:PGP2020/views/vereadores.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sentry/sentry.dart';
@@ -47,20 +49,50 @@ void main() {
   });
 }
 
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SystemChrome.setPreferredOrientations([
-//     DeviceOrientation.portraitUp,
-//     DeviceOrientation.portraitDown,
-//   ]);
-
-//   runApp(MyApp());
-// }
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Platform.isIOS ?
+    CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const <LocalizationsDelegate> [
+        DefaultMaterialLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate
+      ],
+      color: Colors.red,
+      theme: CupertinoThemeData(
+        primaryColor: Colors.red,
+        scaffoldBackgroundColor: Colors.grey[100],
+      ),
+      initialRoute: '/',
+      routes: {
+        HomeView.routeName: (ctx) => HomeView(),
+        ObrasView.routeName: (ctx) => ObrasView(),
+        RealizacoesView.routeName: (ctx) => RealizacoesView(),
+        ProjetosView.routeName: (ctx) => ProjetosView(),
+        PlanoGovernoView.routeName: (ctx) => PlanoGovernoView(),
+        PlanoGovernoDetailsView.routeName: (ctx) => PlanoGovernoDetailsView(),
+        VereadoresView.routeName: (ctx) => VereadoresView(),
+        EducacaoView.routeName: (ctx) => EducacaoView(),
+        SaudeView.routeName: (ctx) => SaudeView(),
+        SocialView.routeName: (ctx) => SocialView(),
+        MobilidadeView.routeName: (ctx) => MobilidadeView(),
+        AgendaView.routeName: (ctx) => AgendaView(),
+        PerfilView.routeName: (ctx) => PerfilView(),
+        EntrarView.routeName: (ctx) => EntrarView(),
+        EditarView.routeName: (ctx) => EditarView(),
+      },
+      onGenerateRoute: (settings) {
+        // print(settings.arguments);
+        return CupertinoPageRoute(
+          builder: (ctx) => HomeView(),
+        );
+      },
+      onUnknownRoute: (settings) => CupertinoPageRoute(
+        builder: (ctx) => HomeView(),
+      ),
+    ) : 
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,

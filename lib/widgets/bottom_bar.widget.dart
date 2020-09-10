@@ -33,7 +33,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).buttonTheme.colorScheme.primary,
+      color: Colors.red[700],
       child: ButtonBar(
         alignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[

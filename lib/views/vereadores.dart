@@ -96,14 +96,14 @@ class _VereadoresViewState extends State<VereadoresView> {
                   });
             }),
       ),
-      // persistentFooterButtons: <Widget>[
-      //   Row(
-      //     mainAxisAlignment: MainAxisAlignment.start,
-      //     children: <Widget>[
-      //       Text('Aperte em uma imagem para saber mais!'),
-      //     ],
-      //   ),
-      // ],
+      persistentFooterButtons: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text('Aperte em uma imagem para saber mais!'),
+          ],
+        ),
+      ],
       // floatingActionButton: FloatingActionButton(
       //   backgroundColor: Colors.white,
       //   onPressed: () => Navigator.of(context).pushNamed(EntrarView.routeName),
